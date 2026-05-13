@@ -27,7 +27,8 @@
   import ProteinVisualization from '../utils/ProteinVisualization';
 
   document.addEventListener('DOMContentLoaded', () => {
-    new ProteinVisualization();
+    const baseUrl = import.meta.env.BASE_URL;
+    new ProteinVisualization(baseUrl);
   });
 </script>
 

@@ -8,7 +8,8 @@ const langIdx = segments.findIndex(s => ['en','es','ca'].includes(s));
 if (langIdx >= 0) {
   lang = segments[langIdx];
 }
-const base = `${import.meta.env.BASE_URL}${lang}/`;
+const rawBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = `${rawBase}/${lang}/`.replace(/\/\/+/g, '/');
 
 const t = {
   en: { home: 'Home', about: 'About', research: 'Research', publications: 'Publications', contact: 'Contact' },
@@ -40,9 +41,9 @@ const t = {
   <li role="none"><a role="menuitem" href={`${base}#publications`} class="nav-link">{t.publications}</a></li>
   <li role="none"><a role="menuitem" href={`${base}#contact`} class="nav-link">{t.contact}</a></li>
         <li class="lang-switcher">
-          <a href={`${import.meta.env.BASE_URL}en/`} class={`lang-link ${lang==='en' ? 'active' : ''}`}>EN</a>
-          <a href={`${import.meta.env.BASE_URL}es/`} class={`lang-link ${lang==='es' ? 'active' : ''}`}>ES</a>
-          <a href={`${import.meta.env.BASE_URL}ca/`} class={`lang-link ${lang==='ca' ? 'active' : ''}`}>CA</a>
+          <a href={`${rawBase}/en/`.replace(/\/\/+/g, '/')} class={`lang-link ${lang==='en' ? 'active' : ''}`}>EN</a>
+          <a href={`${rawBase}/es/`.replace(/\/\/+/g, '/')} class={`lang-link ${lang==='es' ? 'active' : ''}`}>ES</a>
+          <a href={`${rawBase}/ca/`.replace(/\/\/+/g, '/')} class={`lang-link ${lang==='ca' ? 'active' : ''}`}>CA</a>
         </li>
         <li class="theme-switcher" aria-label="Theme">
           <button class="theme-pill" data-theme="brand" title="Brand" aria-pressed="false">

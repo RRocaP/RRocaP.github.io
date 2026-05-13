@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-18T10:23:01.288Z",
+  "timestamp": "2026-05-13T19:44:43.233Z",
   "sizes": {
-    "script": 387075,
-    "stylesheet": 110137,
-    "image": 479039,
+    "script": 857130,
+    "stylesheet": 205051,
+    "image": 190103,
     "font": 0,
-    "total": 976251
+    "total": 1252284
   },
   "counts": {
-    "script": 14,
-    "stylesheet": 14,
-    "font": 0
+    "script": 93,
+    "stylesheet": 21,
+    "font": 1
   }
 }

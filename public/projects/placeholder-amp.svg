@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a4f93"/>
+      <stop offset="100%" stop-color="#163155"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <g fill="#ffd166" opacity="0.25">
+    <circle cx="120" cy="100" r="8"/>
+    <circle cx="230" cy="160" r="6"/>
+    <circle cx="420" cy="90" r="10"/>
+    <circle cx="640" cy="180" r="7"/>
+    <circle cx="700" cy="80" r="5"/>
+  </g>
+  <text x="40" y="380" fill="#eaf2ff" font-family="Sora, sans-serif" font-size="28" font-weight="600">AI-guided AMP Design</text>
+</svg>

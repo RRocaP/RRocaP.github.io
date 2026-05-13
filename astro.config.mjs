@@ -3,9 +3,11 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
+const isVercel = !!process.env.VERCEL;
+
 export default defineConfig({
-  site: 'https://rrocap.github.io',
-  base: '/',
+  site: isVercel ? 'https://rrocap-portfolio.vercel.app' : 'https://rrocap.github.io',
+  base: isVercel ? '/' : '/Portfolio',
   trailingSlash: 'always',
   output: 'static',
   integrations: [

@@ -40,3 +40,4 @@ public/revamp/assets/*.png
 public/revamp/assets/*.mp3
 public/revamp/assets/*.webp
 tmp/
+.vercel
