@@ -22,8 +22,7 @@ export interface Project {
   featured: boolean;
 }
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const joinPath = (path: string) => `${base}/${path}`.replace(/\/\/+/g, '/');
+const base = import.meta.env.BASE_URL;
 
 export const projects: Project[] = [
   {
@@ -31,13 +30,13 @@ export const projects: Project[] = [
     title: 'Functional Inclusion Bodies Engineering',
     description: 'Novel approach to producing active recombinant proteins through controlled aggregation mechanisms.',
     longDescription: 'Developed an innovative methodology for engineering functional inclusion bodies that maintain biological activity while providing enhanced stability and purification advantages. This research demonstrates how controlled protein aggregation can be leveraged for biotechnological applications, challenging traditional assumptions about protein folding in industrial contexts.',
-    image: joinPath('hero/protein-structure.jpg'),
+    image: `${base}hero/protein-structure.jpg`,
     technologies: ['Protein Engineering', 'E. coli Expression', 'Biophysical Analysis', 'Structural Biology'],
     category: 'research',
     year: 2024,
     status: 'published',
     links: {
-      paper: joinPath('en/research/functional-inclusion-bodies'),
+      paper: `${base}en/research/functional-inclusion-bodies`,
       doi: '10.1016/j.example.2024'
     },
     metrics: {
@@ -51,13 +50,13 @@ export const projects: Project[] = [
     title: 'AAV Vector Evaluation in Human Liver Perfusion',
     description: 'Preclinical evaluation of AAV vectors using ex-situ human liver perfusion models.',
     longDescription: 'Pioneered the use of whole human liver ex-situ normothermic perfusion systems for evaluating adeno-associated virus (AAV) vectors. This work provides crucial preclinical data for gene therapy applications targeting liver diseases, offering unprecedented insights into vector biodistribution and expression patterns in human tissue.',
-    image: joinPath('hero/liver-perfusion.jpg'),
+    image: `${base}hero/liver-perfusion.jpg`,
     technologies: ['AAV Vectors', 'Organ Perfusion', 'Gene Therapy', 'Molecular Imaging'],
     category: 'research',
     year: 2023,
     status: 'published',
     links: {
-      paper: joinPath('en/research/harnessing-whole-human-liver-ex-situ-normothermic-perfusion-for-preclinical-aav-vector-evaluation'),
+      paper: `${base}en/research/harnessing-whole-human-liver-ex-situ-normothermic-perfusion-for-preclinical-aav-vector-evaluation`,
       doi: '10.1038/s41467-2023'
     },
     metrics: {
@@ -71,13 +70,13 @@ export const projects: Project[] = [
     title: 'CAR-T Cell Generation Enhancement',
     description: 'Tailored capsid directed evolution technology for improved AAV-mediated CAR-T generation.',
     longDescription: 'Developed advanced capsid engineering approaches to enhance AAV-mediated CAR-T cell generation. This work combines directed evolution techniques with rational design principles to create more efficient vectors for ex-vivo T cell modification, potentially improving CAR-T therapy outcomes.',
-    image: joinPath('hero/car-t-cells.jpg'),
+    image: `${base}hero/car-t-cells.jpg`,
     technologies: ['Directed Evolution', 'CAR-T Cells', 'Capsid Engineering', 'Immunotherapy'],
     category: 'research',
     year: 2023,
     status: 'published',
     links: {
-      paper: joinPath('en/research/tailoring-capsid-directed-evolution-technology-for-improved-aav-mediated-car-t-generation'),
+      paper: `${base}en/research/tailoring-capsid-directed-evolution-technology-for-improved-aav-mediated-car-t-generation`,
       doi: '10.1016/j.ymthe.2023'
     },
     metrics: {
@@ -91,14 +90,14 @@ export const projects: Project[] = [
     title: 'Antimicrobial Resistance Visualization',
     description: 'Interactive timeline showcasing the evolution of antimicrobial resistance and therapeutic interventions.',
     longDescription: 'Created a comprehensive interactive visualization system that maps the historical development of antimicrobial resistance alongside therapeutic innovations. This educational tool helps researchers and clinicians understand the complex interplay between resistance mechanisms and treatment strategies over time.',
-    image: joinPath('hero/timeline-viz.jpg'),
+    image: `${base}hero/timeline-viz.jpg`,
     technologies: ['D3.js', 'React', 'Data Visualization', 'TypeScript'],
     category: 'development',
     year: 2024,
     status: 'completed',
     links: {
       github: 'https://github.com/RRocaP/antimicrobial-timeline',
-      demo: joinPath('en/#timeline')
+      demo: `${base}en/#timeline`
     },
     metrics: {
       stars: 45
@@ -110,14 +109,14 @@ export const projects: Project[] = [
     title: 'Protein Design Visualization Platform',
     description: 'Advanced 3D visualization system for protein engineering and design validation.',
     longDescription: 'Developed a sophisticated web-based platform for visualizing protein structures and design modifications in real-time. The system integrates molecular visualization with computational analysis tools, enabling researchers to interactively explore protein engineering strategies and validate design decisions.',
-    image: joinPath('hero/protein-viz.jpg'),
+    image: `${base}hero/protein-viz.jpg`,
     technologies: ['Three.js', 'WebGL', 'Protein Structures', 'Computational Biology'],
     category: 'development',
     year: 2024,
     status: 'in-progress',
     links: {
       github: 'https://github.com/RRocaP/protein-viz',
-      demo: joinPath('en/#protein-showcase')
+      demo: `${base}en/#protein-showcase`
     },
     metrics: {
       stars: 32
@@ -129,14 +128,14 @@ export const projects: Project[] = [
     title: 'AI-Enhanced Portfolio Architecture',
     description: 'Intelligent portfolio system with vector search and AI-powered content discovery.',
     longDescription: 'Built a next-generation portfolio architecture that incorporates AI-powered content discovery, vector-based search capabilities, and intelligent user interaction patterns. The system uses modern web technologies to create an engaging, accessible, and performant showcase of scientific research and engineering projects.',
-    image: joinPath('hero/ai-system.jpg'),
+    image: `${base}hero/ai-system.jpg`,
     technologies: ['Astro.js', 'React', 'TypeScript', 'AI/ML', 'Vector Search'],
     category: 'development',
     year: 2024,
     status: 'completed',
     links: {
       github: 'https://github.com/RRocaP/RRocaP.github.io',
-      demo: joinPath('en/#ai-portfolio')
+      demo: 'https://rrocap.github.io/'
     },
     metrics: {
       stars: 28

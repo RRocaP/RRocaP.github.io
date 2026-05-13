@@ -14,24 +14,22 @@ class ProteinVisualization {
   private smoothingFactor: number;
   private devicePixelRatio: number;
 
-  constructor(baseUrl: string = '/Portfolio/') {
+  constructor() {
     this.canvas = document.getElementById('protein-canvas') as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     this.loadingOverlay = document.getElementById('loading-overlay');
-
+    
     // Configuration
     this.frameCount = 180; // Total number of frames (180 degrees rotation)
     this.currentFrame = 0;
     this.targetFrame = 0;
     this.frames = [];
     this.loadedFrames = 0;
-
+    
     // Video/Image sequence configuration
     // In production, these would be actual video frames or image sequences
-    const cleanBase = baseUrl.replace(/\/$/, '');
-    this.frameBasePath = `${cleanBase}/assets/protein-frames/`.replace(/\/\/+/g, '/'); // Path to frame images
+    this.frameBasePath = `${import.meta.env.BASE_URL}assets/protein-frames/`; // Path to frame images
     this.frameFormat = '.webp'; // Using WebP for better compression
-
     
     // Scroll configuration
     this.scrollSensitivity = 0.5;
