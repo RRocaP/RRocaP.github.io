@@ -93,15 +93,14 @@ const gm = (translations[lang] as any).gemini;
   }
 
   h1 {
-    font-size: clamp(2.25rem, 7vw, 4.5rem);
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 1.1;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: clamp(2.5rem, 7vw, 4.75rem);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
     margin-bottom: 2rem;
-    background: linear-gradient(to right, var(--gm-text-primary), var(--gm-text-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--gm-text-primary);
+    text-wrap: balance;
   }
 
   p {
