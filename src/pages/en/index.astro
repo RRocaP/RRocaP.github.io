@@ -2,11 +2,14 @@
 import Layout from '../../layouts/Layout.astro';
 import ImmersiveBackground from '../../components/gemini/ImmersiveBackground.astro';
 import NavGemini from '../../components/gemini/NavGemini.astro';
-import HeroGemini from '../../components/gemini/HeroGemini.astro';
+import HeroDiffusion from '../../components/HeroDiffusion.astro';
 import WorksGemini from '../../components/gemini/WorksGemini.astro';
 import AboutGemini from '../../components/gemini/AboutGemini.astro';
 import WritingGemini from '../../components/gemini/WritingGemini.astro';
 import ContactGemini from '../../components/gemini/ContactGemini.astro';
+import { translations } from '../../data/i18n';
+const gm = (translations.en as any).gemini;
+const heroTitleHtml = gm.heroTitle.split('\n').join('<br>');
 ---
 
 <Layout
@@ -17,7 +20,14 @@ import ContactGemini from '../../components/gemini/ContactGemini.astro';
 >
   <ImmersiveBackground />
   <NavGemini lang="en" />
-  <HeroGemini lang="en" />
+  <HeroDiffusion>
+    <Fragment slot="title" set:html={heroTitleHtml} />
+    <Fragment slot="subtitle">{gm.heroSubtitle}</Fragment>
+    <Fragment slot="ctas">
+      <a href="#works" class="btn-primary">{gm.ctaPrimary}</a>
+      <a href="#about" class="btn-ghost">{gm.ctaSecondary}</a>
+    </Fragment>
+  </HeroDiffusion>
   <WorksGemini lang="en" />
   <AboutGemini lang="en" />
   <WritingGemini lang="en" />

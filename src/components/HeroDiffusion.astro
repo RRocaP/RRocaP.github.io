@@ -1,0 +1,208 @@
+---
+/**
+ * HeroDiffusion — diffusion-model "noise to structure" hero animation.
+ *
+ * Layout: text on the left (~45%), WebGL canvas on the right (~55%).
+ * Mobile (<768px): stacked, text on top, canvas below.
+ *
+ * Slots:
+ *   kicker   — small mono-uppercase eyebrow
+ *   title    — display headline
+ *   subtitle — body lead paragraph
+ *   ctas     — primary + secondary CTA buttons
+ *
+ * Wire up at the page level by passing children for each slot. No JS API.
+ * The component owns its own DiffusionField lifecycle and cleans up on
+ * Astro view-transition swaps via `astro:before-swap`.
+ */
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const fallbackBase = `${base}/hero-diffusion-fallback`;
+---
+
+<section class="hero-diffusion" role="banner">
+  <div class="hero-diffusion__text">
+    <p class="hero-diffusion__kicker"><slot name="kicker" /></p>
+    <h1 class="hero-diffusion__title"><slot name="title" /></h1>
+    <p class="hero-diffusion__subtitle"><slot name="subtitle" /></p>
+    <div class="hero-diffusion__ctas"><slot name="ctas" /></div>
+  </div>
+
+  <div class="hero-diffusion__canvas-wrap" aria-hidden="true">
+    <picture class="hero-diffusion__fallback">
+      <source srcset={`${fallbackBase}.avif`} type="image/avif" />
+      <source srcset={`${fallbackBase}.webp`} type="image/webp" />
+      <img src={`${fallbackBase}.png`} alt="" loading="eager" decoding="async" />
+    </picture>
+    <canvas data-diffusion-canvas></canvas>
+  </div>
+</section>
+
+<script>
+  import { DiffusionField } from "../lib/diffusion-field";
+
+  function boot() {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-diffusion-canvas]");
+    if (!canvas) return;
+    let field: DiffusionField | null = null;
+    try {
+      field = new DiffusionField(canvas);
+    } catch (err) {
+      // WebGL unavailable / shader compile failure → leave fallback visible.
+      console.warn("[HeroDiffusion] WebGL init failed:", err);
+      return;
+    }
+
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    field.setReducedMotion(mql.matches);
+    field.start();
+
+    const onMotionChange = (e: MediaQueryListEvent) => field?.setReducedMotion(e.matches);
+    mql.addEventListener("change", onMotionChange);
+
+    // Hide the static fallback once WebGL has rendered its first frame.
+    requestAnimationFrame(() => {
+      const fb = document.querySelector<HTMLElement>(".hero-diffusion__fallback");
+      if (fb) fb.style.opacity = "0";
+    });
+
+    const cleanup = () => {
+      mql.removeEventListener("change", onMotionChange);
+      field?.dispose();
+      field = null;
+    };
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+    window.addEventListener("pagehide", cleanup, { once: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
+  }
+</script>
+
+<style>
+  .hero-diffusion {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+    min-height: 80vh;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 4vw, 4rem);
+    background: #f5efe6;
+    overflow: hidden;
+    color: #1f1f1f;
+  }
+
+  .hero-diffusion__text {
+    min-width: 0; /* allow text column to shrink without cropping */
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    max-width: 38rem;
+  }
+
+  .hero-diffusion__kicker {
+    margin: 0;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(31, 31, 31, 0.66);
+  }
+  .hero-diffusion__kicker:empty {
+    display: none;
+  }
+
+  .hero-diffusion__title {
+    margin: 0;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .hero-diffusion__subtitle {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    line-height: 1.6;
+    color: rgba(31, 31, 31, 0.78);
+    max-width: 32rem;
+  }
+  .hero-diffusion__subtitle:empty {
+    display: none;
+  }
+
+  .hero-diffusion__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+  }
+  .hero-diffusion__ctas:empty {
+    display: none;
+  }
+
+  .hero-diffusion__canvas-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.05 / 1;
+    isolation: isolate;
+  }
+
+  /* Soft pastel under-glow — page-level, not in canvas. Bloom/glow inside the
+     WebGL canvas is banned; this widely-spread, very-faint gradient lives
+     behind it and lets the cream page colour read through everywhere else. */
+  .hero-diffusion__canvas-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 55% at 50% 60%,
+      rgba(200, 74, 58, 0.06) 0%,
+      transparent 75%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero-diffusion__canvas-wrap canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hero-diffusion__fallback {
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.6s ease-out;
+  }
+  .hero-diffusion__fallback img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .hero-diffusion {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 4rem 1.25rem 2.5rem;
+    }
+    .hero-diffusion__canvas-wrap {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-diffusion__fallback {
+      transition: none;
+    }
+  }
+</style>
