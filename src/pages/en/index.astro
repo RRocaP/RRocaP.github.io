@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ImmersiveBackground from '../../components/gemini/ImmersiveBackground.astro';
 import NavGemini from '../../components/gemini/NavGemini.astro';
 import HeroDiffusion from '../../components/HeroDiffusion.astro';
 import WorksGemini from '../../components/gemini/WorksGemini.astro';
@@ -18,7 +17,6 @@ const heroTitleHtml = gm.heroTitle.split('\n').join('<br>');
   lang="en"
   theme="gemini"
 >
-  <ImmersiveBackground />
   <NavGemini lang="en" />
   <HeroDiffusion>
     <Fragment slot="title" set:html={heroTitleHtml} />
